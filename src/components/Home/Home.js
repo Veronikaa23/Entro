@@ -1,46 +1,28 @@
+import { useEffect, useState } from "react";
+import * as eventService from "../../services/eventService.js";
+import LatestEvents from "./LatestEvents/LatestEvents.js";
+
 const Home = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    eventService.getAll().then((result) => {
+      setEvents(result);
+    });
+  }, []);
+
   return (
     <section id="welcome-world">
       <div className="welcome-message">
         <h2>Welcome to ENTRO</h2>
         <h2>Latest events:</h2>
-        {/* Display div: with information about every game (if any) */} 
-        <div className="event">
-          <div className="image-wrap">
-            <img src="images/event1.jpg" />
-          </div>
-          <h3>Music festival</h3>
-          <div className="data-buttons">
-            <a href="#" className="btn details-btn">
-              Details
-            </a>
-          </div>
-        </div>
-        <div className="event">
-          <div className="image-wrap">
-            <img src="images/event2.jpg" />
-          </div>
-          <h3>Best band ever</h3>
-          <div className="data-buttons">
-            <a href="#" className="btn details-btn">
-              Details
-            </a>
-          </div>
-        </div>
-        <div className="event">
-          <div className="image-wrap">
-            <img src="images/event3.jpg" />
-          </div>
-          <h3>Rock fest</h3>
-          <div className="data-buttons">
-            <a href="#" className="btn details-btn">
-              Details
-            </a>
-          </div>
-        </div>
 
-        {/* Display paragraph: If there is no games  */} 
-        <p className="no-articles">No events yet</p>
+        {events.length > 0 ? (
+          events.map((x) => <LatestEvents key={x._id} event={x} />)
+        ) : (
+          <p className="no-articles">No events yet</p>
+        )}
+
       </div>
     </section>
 

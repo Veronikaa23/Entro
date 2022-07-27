@@ -26,11 +26,6 @@ const Register = () => {
             id="address"
             placeholder="Sofia, Ivan Vazov 33"
           />
-          <label htmlFor="gender">Gender:</label>
-          <select id="gender" type="gender" name="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
           <label htmlFor="pass">Password:</label>
           <input
             type="password"
@@ -45,7 +40,12 @@ const Register = () => {
             id="confirm-password"
             placeholder="******"
           />
-          <input className="btn submit" type="submit" defaultValue="Register" />
+           <label htmlFor="gender">Gender:</label>
+          <select id="gender" type="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <input className="btn submit" type="submit" value="Register" />
           <p className="field">
             <span>
               If you already have acount click <a href="/login">here</a>

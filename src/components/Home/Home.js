@@ -1,15 +1,8 @@
-import { useEffect, useState } from "react";
-import * as eventService from "../../services/eventService.js";
+
 import LatestEvents from "./LatestEvents/LatestEvents.js";
 
-const Home = () => {
-  const [events, setEvents] = useState([]);
+const Home = ({events}) => {
 
-  useEffect(() => {
-    eventService.getAll().then((result) => {
-      setEvents(result);
-    });
-  }, []);
 
   return (
     <section id="welcome-world">

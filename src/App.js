@@ -4,19 +4,36 @@ import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Login/Login";
-import "./App.css";
 import Register from "./components/Register/Register";
+import CreateEvent from "./components/CreateEvent/CreateEvent";
+import Catalog from "./components/Catalog/Catalog";
+import DetailsEvent from "./components/DetailsEvent/DetailsEvent";
+import { useEffect, useState } from "react";
+import * as eventService from "./services/eventService";
+
+import "./App.css";
 
 function App() {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    eventService.getAll().then((result) => {
+      setEvents(result);
+    });
+  }, []);
+
   return (
     <div id="box">
       <Header />
 
       <main class="main-layout">
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home events={events} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/create" element={<CreateEvent />} />
+          <Route path="/catalog" element={<Catalog events={events} />} />
+          <Route path="/catalog/:eventId" element={<DetailsEvent events={events} />} />
         </Routes>
       </main>
 

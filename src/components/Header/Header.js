@@ -1,25 +1,22 @@
+import { Link } from 'react-router-dom';
+
 const Header = () => {
   return (
-    <header>
-      {/* <h1>
-        <a class="home" href="/">
-          Events
-        </a>
-      </h1> */}
-      <div className="logo">
-        <img src="images/logo.png" alt="logo" />
-      </div>
+    <header>  
+      <Link className="logo" to="/">
+        <img src="images/logo.png" alt="logo"/>
+      </Link>
       <nav>
-        <a href="/catalog">All events</a>
+        <Link to="/catalog">All events</Link>
 
         {/* <div id="user"> */}
-        <a href="/create">Create Event</a>
-        <a href="/logout">Logout</a>
+        <Link to="/create">Create Event</Link>
+        <Link to="/logout">Logout</Link>
         {/* </div> */}
 
         {/* <div id="guest"> */}
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
         {/* </div> */}
       </nav>
     </header>

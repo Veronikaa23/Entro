@@ -10,7 +10,7 @@ const LatestEvents = ({
           </div>
           <h3>{event.title}</h3>
           <div className="data-buttons">
-            <Link to="/" className="btn details-btn">
+            <Link to={`/catalog/${event._id}`} className="btn details-btn">
               Details
             </Link>
           </div>

@@ -1,4 +1,5 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import uniqid from 'uniqid';
 
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
@@ -15,12 +16,24 @@ import "./App.css";
 
 function App() {
   const [events, setEvents] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     eventService.getAll().then((result) => {
       setEvents(result);
     });
   }, []);
+
+const addEventHandler = (eventData) => {
+  setEvents(state => [
+    ...state,
+    {
+      ...eventData,
+      _id:uniqid()
+    },
+  ]);
+  navigate('/catalog');
+}
 
   return (
     <div id="box">
@@ -31,7 +44,7 @@ function App() {
           <Route path="/" element={<Home events={events} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/create" element={<CreateEvent />} />
+          <Route path="/create" element={<CreateEvent addEventHandler={addEventHandler}/>} />
           <Route path="/catalog" element={<Catalog events={events} />} />
           <Route path="/catalog/:eventId" element={<DetailsEvent events={events} />} />
         </Routes>

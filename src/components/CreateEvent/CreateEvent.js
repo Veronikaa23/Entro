@@ -1,6 +1,12 @@
-const CreateEvent = () => {
+const CreateEvent = ({addEventHandler}) => {
   const onSubmit = (e) => {
     e.preventDefault();
+
+    const eventData = Object.fromEntries(new FormData(e.target));
+
+    console.log(eventData);
+
+    addEventHandler(eventData)
   };
 
   return (

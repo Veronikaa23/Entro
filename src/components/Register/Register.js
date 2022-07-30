@@ -1,7 +1,38 @@
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+
+import { useNavigate } from "react-router-dom";
+import * as authService from "../../services/authService";
+
 const Register = () => {
+  const { userLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+   
+    // const username = formData.get("username");
+    // const address = formData.get("address");
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const confirmPassword = formData.get("confirmPassword");
+    // const gender = formData.get("gender");
+
+    if (password !== confirmPassword) {
+      return;
+    }
+
+    authService.register(email, password).then((authData) => {
+      userLogin(authData);
+      navigate("/");
+    });
+  };
+
   return (
     <section id="register-page" className="content auth">
-      <form id="register">
+      <form id="register" onSubmit={onSubmit}>
         <div className="container">
           <div className="user-logo" />
           <h1>Register</h1>
@@ -36,11 +67,11 @@ const Register = () => {
           <label htmlFor="con-pass">Confirm Password:</label>
           <input
             type="password"
-            name="confirm-password"
-            id="confirm-password"
+            name="confirmPassword"
+            id="confirmPassword"
             placeholder="******"
           />
-           <label htmlFor="gender">Gender:</label>
+          <label htmlFor="gender">Gender:</label>
           <select id="gender" type="gender" name="gender">
             <option value="male">Male</option>
             <option value="female">Female</option>

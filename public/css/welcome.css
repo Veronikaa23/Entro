@@ -73,7 +73,7 @@
 }
 
 .event {
-    box-shadow: 0px 0px 30px 0px;
+    box-shadow: 0px 0px 30px 0px #49535e, -14px -14px 20px #191c21;
     margin: auto;
     margin-top: 20px;
     padding: 50px;
@@ -83,7 +83,8 @@
     border-radius: 15px;
     /* float: left; */
     height: auto;
-    color: black;
+    /* color: black; */
+    background-color: #29303c;
 }
 
 .image-wrap {

@@ -7,7 +7,7 @@ const Catalog = ({ events }) => {
     
             {events.length > 0
                 ? events.map(x => <CatalogEvent key={x._id} event={x} />)
-                : <h3 className="no-articles">No articles yet</h3>
+                : <h3 className="no-articles">No events yet</h3>
             }
         </section>
     );

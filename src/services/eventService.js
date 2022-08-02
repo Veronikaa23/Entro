@@ -1,6 +1,14 @@
-const baseUrl = 'http://localhost:3030';
+import * as request from "./requester";
 
-export const getAll = () => {
-    return fetch(`${baseUrl}/data/events`)
-        .then(res => res.json())
-};
+const baseUrl = "http://localhost:3030/data/events";
+
+export const getAll = () => request.get(baseUrl);
+
+export const getOne = (eventId) => request.get(`${baseUrl}/${eventId}`);
+
+export const create = (eventData) => request.post(baseUrl, eventData);
+
+export const edit = (eventId, eventData) =>
+  request.put(`${baseUrl}/${eventId}`, eventData);
+
+export const remove = (eventId) => request.del(`${baseUrl}/${eventId}`);

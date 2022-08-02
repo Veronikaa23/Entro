@@ -1,12 +1,19 @@
-const CreateEvent = ({addEventHandler}) => {
+import { useContext } from "react";
+
+import { eventContext } from "../../context/eventContext"
+import * as eventService from "../../services/eventService"
+
+const CreateEvent = () => {
+  const { addEvent } = useContext(eventContext)
   const onSubmit = (e) => {
     e.preventDefault();
 
     const eventData = Object.fromEntries(new FormData(e.target));
 
-    console.log(eventData);
-
-    addEventHandler(eventData)
+  eventService.create(eventData)
+  .then(result => {
+    addEvent(result);
+  });
   };
 
   return (
@@ -28,17 +35,17 @@ const CreateEvent = ({addEventHandler}) => {
             name="date"
             placeholder="Enter event date..."
           />
-          {/* <label htmlFor="levels">MaxLevel:</label>
+          <label htmlFor="seats">Number of seats:</label>
                 <input
                     type="number"
-                    id="maxLevel"
-                    name="maxLevel"
+                    id="seats"
+                    name="seats"
                     min={1}
                     placeholder={1}
-                /> */}
+                />
+
 
           <label htmlFor="event-img">Image:</label>
-
           <input
             type="text"
             id="imageUrl"
@@ -46,9 +53,9 @@ const CreateEvent = ({addEventHandler}) => {
             placeholder="Upload a photo..."
           />
 
-          <label htmlFor="summary">Description:</label>
+          <label htmlFor="description">Description:</label>
 
-          <textarea name="summary" id="summary" defaultValue={""} />
+          <textarea name="description" id="description" defaultValue={"Write description here..."} />
 
           <input className="btn submit" type="submit" value="Create Event" />
         </div>

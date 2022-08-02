@@ -1,20 +1,31 @@
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import * as eventService from "../../services/eventService"
 
-const DetailsEvent = ({ events }) => {
+const DetailsEvent = () => {
+
   const { eventId } = useParams();
-  const event = events.find((x) => x._id == eventId);
-  console.log(events);
+  const [currentEvent, setCurrentEvent] = useState({})
+
+  useEffect(()=>{
+    eventService.getOne(eventId)
+    .then(result => {
+      setCurrentEvent(result)
+    })
+  },[])
+
+  
   return (
     <section id="event-details">
       <h1>Event Details</h1>
       <div className="info-section">
         <div className="event-header">
-          <img className="event-img" src={event.imageUrl} />
-          <h1>{event.title}</h1>
-          <span className="date">Date: {event.date}</span>
+          <img className="event-img" src={currentEvent.imageUrl} />
+          <h1>{currentEvent.title}</h1>
+          <span className="date">Date: {currentEvent.date}</span>
           {/* <p className="type">{game.category}</p> */}
         </div>
-        <p className="text">{event.description}</p>
+        <p className="text">{currentEvent.description}</p>
 
         {/* <div className="details-comments">
                 <h2>Comments:</h2>
@@ -32,15 +43,15 @@ const DetailsEvent = ({ events }) => {
             </div> */}
 
         <div className="buttons">
-          <a href="#" className="button">
+          <Link to={`/events/${currentEvent._id}/edit`} className="button">
             Edit
-          </a>
-          <a href="#" className="button">
+          </Link>
+          <Link to={`/events/${currentEvent._id}/delete`} className="button">
             Delete
-          </a>
-          <a href="#" className="button">
+          </Link>
+          <Link to="#" className="button">
             Buy
-          </a>
+          </Link>
         </div>
       </div>
       {/* 

@@ -1,4 +1,3 @@
-
 import { createContext, useContext } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
@@ -29,7 +28,6 @@ export const AuthProvider = ({
     );
 };
 
-// Custom Hook
 export const useAuthContext = () => {
     const context = useContext(AuthContext);
 

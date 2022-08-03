@@ -1,5 +1,4 @@
 import { useContext } from "react";
-
 import { eventContext } from "../../context/eventContext"
 import * as eventService from "../../services/eventService"
 

@@ -3,6 +3,7 @@ import { useAuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const { user } = useAuthContext();
+
   return (
     <header>
       <Link className="logo" to="/">

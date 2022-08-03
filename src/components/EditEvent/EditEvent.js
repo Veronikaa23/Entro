@@ -26,7 +26,7 @@ const EditEvent = () => {
         eventService.edit(eventId, eventData)
             .then(result => {
                 eventEdit(eventId, result);
-                navigate(`/catalog`)
+                navigate(`/catalog/${eventId}`)
             });
     };
 

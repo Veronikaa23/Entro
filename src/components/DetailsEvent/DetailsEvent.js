@@ -1,58 +1,62 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import * as eventService from "../../services/eventService"
+import { useAuthContext } from "../../context/AuthContext";
+import * as eventService from "../../services/eventService";
 
 const DetailsEvent = () => {
-
   const { eventId } = useParams();
-  const [currentEvent, setCurrentEvent] = useState({})
+  const { user } = useAuthContext();
+  const [currentEvent, setCurrentEvent] = useState({});
 
-  useEffect(()=>{
-    eventService.getOne(eventId)
-    .then(result => {
-      setCurrentEvent(result)
-    })
-  },[])
+  const isOwner = currentEvent?._ownerId === user?._id;
+  const isEmpty = Object.keys(user).length === 0;
 
-  
+  console.log(isOwner);
+
+  useEffect(() => {
+    eventService.getOne(eventId).then((result) => {
+      setCurrentEvent(result);
+    });
+  }, [eventId]);
+  console.log(user);
+
   return (
     <section id="event-details">
       <h1>Event Details</h1>
       <div className="info-section">
         <div className="event-header">
-          <img className="event-img" src={currentEvent.imageUrl} />
+          <img className="event-img" src={currentEvent.imageUrl} alt="poster" />
           <h1>{currentEvent.title}</h1>
           <span className="date">Date: {currentEvent.date}</span>
-          {/* <p className="type">{game.category}</p> */}
         </div>
+        <span className="seats">Tickets: {currentEvent.seats}</span>
         <p className="text">{currentEvent.description}</p>
 
-        {/* <div className="details-comments">
-                <h2>Comments:</h2>
-                <ul>
-                    {events.comments?.map(x => 
-                        <li className="comment">
-                            <p>{x}</p>
-                        </li>
-                    )}
-                </ul>
-
-                {!events.comments &&
-                    <p className="no-comment">No comments.</p>
-                }
-            </div> */}
-
-        <div className="buttons">
-          <Link to={`/events/${currentEvent._id}/edit`} className="button">
-            Edit
-          </Link>
-          <Link to={`/events/${currentEvent._id}/delete`} className="button">
-            Delete
-          </Link>
-          <Link to="#" className="button">
-            Buy
-          </Link>
-        </div>
+        {!isEmpty && (
+          <div className="buttons">
+            {isOwner && (
+              <div>
+                <Link
+                  to={`/events/${currentEvent._id}/edit`}
+                  className="button"
+                >
+                  Edit
+                </Link>
+                <Link
+                  to={`/events/${currentEvent._id}/delete`}
+                  className="button"
+                >
+                  Delete
+                </Link>
+              </div>
+            )}
+            {!isOwner && (
+              <Link to="#" className="button">
+                Buy
+              </Link>
+            )}
+          </div>
+        )}
       </div>
       {/* 
         <article className="buy-ticket">

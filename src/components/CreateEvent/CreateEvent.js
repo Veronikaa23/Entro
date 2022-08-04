@@ -3,7 +3,7 @@ import { eventContext } from "../../context/eventContext"
 import * as eventService from "../../services/eventService"
 
 const CreateEvent = () => {
-  const { addEvent } = useContext(eventContext)
+  const { eventAdd } = useContext(eventContext)
   const onSubmit = (e) => {
     e.preventDefault();
 
@@ -11,7 +11,7 @@ const CreateEvent = () => {
 
   eventService.create(eventData)
   .then(result => {
-    addEvent(result);
+    eventAdd(result);
   });
   };
 
@@ -34,11 +34,11 @@ const CreateEvent = () => {
             name="date"
             placeholder="Enter event date..."
           />
-          <label htmlFor="seats">Number of seats:</label>
+          <label htmlFor="tickets">Tickets:</label>
                 <input
                     type="number"
-                    id="seats"
-                    name="seats"
+                    id="tickets"
+                    name="tickets"
                     min={1}
                     placeholder={1}
                 />

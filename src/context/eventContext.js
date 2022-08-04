@@ -15,7 +15,7 @@ export const EventProvider = ({ children }) => {
     });
   }, []);
 
-  const addEvent = (eventData) => {
+  const eventAdd = (eventData) => {
     setEvents((state) => [...state, eventData]);
     navigate("/catalog");
   };
@@ -23,8 +23,12 @@ export const EventProvider = ({ children }) => {
   const eventEdit = (eventId, eventData) => {
     setEvents((state) => state.map((x) => (x._id === eventId ? eventData : x)));
   };
+
+  const eventRemove = (eventId) => {
+    setEvents((state) => state.filter(x => x._id !== eventId));
+}
   return (
-    <eventContext.Provider value={{ events, eventEdit, addEvent }}>
+    <eventContext.Provider value={{ events, eventEdit, eventAdd, eventRemove }}>
       {children}
     </eventContext.Provider>
   );

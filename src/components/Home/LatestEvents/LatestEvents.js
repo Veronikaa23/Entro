@@ -6,7 +6,7 @@ const LatestEvents = ({
     return (
         <div className="event">
           <div className="image-wrap">
-            <img src={event.imageUrl} />
+            <img src={event.imageUrl} alt="ev-img" />
           </div>
           <h3>{event.title}</h3>
           <div className="data-buttons">

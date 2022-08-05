@@ -12,3 +12,6 @@ export const edit = (eventId, eventData) =>
   request.put(`${baseUrl}/${eventId}`, eventData);
 
 export const remove = (eventId) => request.del(`${baseUrl}/${eventId}`);
+
+export const getSortedEvents = () =>
+  request.get(`${baseUrl}?sortBy=_createdOn%20desc`);

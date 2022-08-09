@@ -5,19 +5,26 @@ import { useEventContext } from "../../context/eventContext";
 import * as eventService from "../../services/eventService";
 
 const DetailsEvent = () => {
-  const { eventId } = useParams();
   const { user } = useAuthContext();
+  const { eventId } = useParams();
+  const { eventRemove } = useEventContext();
   const [currentEvent, setCurrentEvent] = useState({});
- 
+  const [numberOfLikes, setNumberOfLikes] = useState();
+  const navigate = useNavigate();
+
   const isOwner = currentEvent?._ownerId === user?._id;
   const isEmpty = Object.keys(user).length === 0;
 
-  const { eventRemove } = useEventContext();
-  const navigate = useNavigate();
 
   useEffect(() => {
     eventService.getOne(eventId).then((result) => {
       setCurrentEvent(result);
+    });
+  }, [eventId]);
+
+  useEffect(() => {
+    eventService.getLikes(eventId).then((result) => {
+      setNumberOfLikes(result);
     });
   }, [eventId]);
 
@@ -33,6 +40,13 @@ const DetailsEvent = () => {
       });
     }
   };
+  const onLike = (e) => {
+    e.preventDefault();
+    const isClicked = e.target;
+    if (isClicked) {
+      eventService.likes(eventId);
+    }
+  };
 
   return (
     <section id="event-details">
@@ -43,7 +57,11 @@ const DetailsEvent = () => {
           <h1>{currentEvent.title}</h1>
           <span className="date">Date: {currentEvent.date}</span>
         </div>
-        <span className="tickets">Tickets: {currentEvent.tickets}</span>
+        <span className="tickets">
+          Available tickets: {currentEvent.tickets}
+        </span>
+        <p className="city">City: {currentEvent.city}</p>
+        <div className="likes">Total likes: {numberOfLikes} </div>
         <p className="text">{currentEvent.description}</p>
 
         {!isEmpty && (
@@ -62,44 +80,13 @@ const DetailsEvent = () => {
               </div>
             )}
             {!isOwner && (
-              <Link to="#" className="button">
-                Buy
-              </Link>
+              <button onClick={(e) => onLike(e)} className="button">
+                Like
+              </button>
             )}
           </div>
         )}
       </div>
-      {/* 
-        <article className="buy-ticket">
-            <label>Buy a ticket:</label>
-            <form className="form" onSubmit={buyTicketHandler}>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder="John Doe"
-                    onChange={onChange}
-                    onBlur={validateUsername}
-                    value={comment.username}
-                />
-
-                {error.username && 
-                    <div style={{color: 'red'}}>{error.username}</div>
-                } */}
-      {/* 
-                <textarea
-                    name="comment"
-                    placeholder="Comment......"
-                    onChange={onChange}
-                    value={comment.comment}
-                /> */}
-      {/* 
-                <input
-                    className="btn submit"
-                    type="submit"
-                    value="Buy"
-                />
-            </form>
-        </article> */}
     </section>
   );
 };

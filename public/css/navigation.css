@@ -63,11 +63,13 @@ header nav>* {
 }
 
 footer {
-    padding: 0.5em;
+    margin-top: 560px;
     width: 100%;
-    position: absolute;
+    text-align: center;
     left: 0;
     bottom: 0;
+    display: block;
+    /* position: fixed; */
 }
 
 nav a {

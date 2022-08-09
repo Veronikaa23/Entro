@@ -29,7 +29,7 @@
 }
 
 .welcome-message h2 {
-    color: rgb(60, 206, 236);
+    color: white;
     font-size: 300%;
     font-size: 55px;
     line-height: 1;
@@ -112,7 +112,7 @@
     transition: all 0.5s ease-out;
     text-align: center;
     text-transform: capitalize;
-    color: rgb(60, 206, 236);
+    color: white;
 }
 
 .event-content>h4 {
@@ -146,7 +146,7 @@
 }
 
 #home-page>h1 {
-    color: rgb(60, 206, 236);
+    color: white;
     text-align: center;
     font-weight: 700;
     font-size: 84px;

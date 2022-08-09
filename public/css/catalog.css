@@ -4,14 +4,16 @@
     overflow: hidden;
     border-radius: 15px;
     padding: 20px;
-    height: auto;
-    width: 900px;
-    margin: auto;
-    margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    /* height: auto;
+    width: auto;
+    margin: auto; */
+    margin-top: 150px;
 }
 
 #catalog-page>h1 {
-    color: rgb(60, 206, 236);
+    color: white;
     font-family: "Agency FB";
     font-size: 48px;
     font-weight: 700;
@@ -36,15 +38,15 @@
 .event-catalog {
     box-shadow: 0px 0px 30px 0px #49535e, -14px -14px 20px #191c21;
     margin: auto;
-    margin-top: 20px;
+    margin-top: 150px;
     padding: 50px;
     background-position: right 35% bottom 45%;
     background-color: #29303c;
     box-sizing: border-box;
     border-radius: 15px;
     height: auto;
-    /* color: rgb(60, 206, 236); */
 }
+
 .image-wrap-catalog {
     width: 250px;
     height: 250px;
@@ -88,6 +90,7 @@
     transition: all 0.5s ease-out;
     text-align: center;
     text-transform: capitalize;
+    color: white;
 }
 
 .details-button {
@@ -102,8 +105,69 @@
     padding: 10px;
     margin-top: auto;
     margin-left: 20px;
-
     font-size: 1.4rem;
     padding-top: 20px;
     text-align: center;
+}
+.search {
+    width: 540px;
+    height: 60px;
+    margin:100px auto;
+    background: rgba(31, 30, 30, 0.938);
+    border-radius: 3px;
+    box-shadow: 0px 0px 15px 10px rgba(86, 124, 194, 0.911);
+    background-color: #fff;
+}
+
+#find-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#find-section>.card {
+    margin-left: 6em;
+}
+
+.search>input {
+    width: 340px;
+    padding: 10px 5px;
+    float:right;
+    color: rgb(3, 3, 3);
+    border: 0;
+    height: 60px;
+    font-size: 1.3em;
+    background: transparent;
+    border-radius: 3px 0 0 3px;
+}
+
+.search>input:focus {
+    outline: 0;
+    height: 60px;
+    background: transparent;
+}
+
+button {
+    position:absolute;
+    float: right;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 60px;
+    width: 120px;
+    font-size: 1.2em;
+    color: rgb(53, 49, 49);
+    background: rgb(207, 207, 214);
+    border-left: 1px solid rgb(180, 166, 166);
+    border-radius: 15px;
+}
+
+button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #8fa9b9;
+}
+
+button:active {
+    box-shadow: 0px 0px 12px 0px rgb(105, 93, 93);
+    height: 60px;
 }

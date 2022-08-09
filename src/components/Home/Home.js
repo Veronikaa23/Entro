@@ -1,10 +1,17 @@
-import { useContext } from "react";
-import { eventContext } from "../../context/eventContext.js";
+import { useState,useEffect } from "react";
 import LatestEvents from "./LatestEvents/LatestEvents.js";
+import *  as eventService from "../../services/eventService"
 
 const Home = () => {
-  const { sortedEvents } = useContext(eventContext);
+  const [sortedEvents, setSortedEvents] = useState([]);
+  useEffect(() => {
+    eventService.getSortedEvents().then((result) => {
+      setSortedEvents(result);
+    });
+  }, []);
+
   const latestThree = sortedEvents.slice(0, 3);
+ 
   return (
     <section id="welcome-world">
       <div className="welcome-message">

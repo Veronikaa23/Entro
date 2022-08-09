@@ -50,12 +50,12 @@ const Register = () => {
             id="username"
             placeholder="maria123"
           />
-          <label htmlFor="address">Address:</label>
+          <label htmlFor="city">City:</label>
           <input
             type="text"
-            name="address"
-            id="address"
-            placeholder="Sofia, Ivan Vazov 33"
+            name="city"
+            id="city"
+            placeholder="Sofia"
           />
           <label htmlFor="pass">Password:</label>
           <input

@@ -1,12 +1,14 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
-import * as eventService from "../services/eventService"
+import * as eventService from "../services/eventService";
 
 export const eventContext = createContext();
 
 export const EventProvider = ({ children }) => {
+
   const [events, setEvents] = useState([]);
+  // const [likes, setLikes] = useState([]);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,6 +16,12 @@ export const EventProvider = ({ children }) => {
       setEvents(result);
     });
   }, []);
+
+  // useEffect(() => {
+  //   eventService.getLikes(eventId).then((result) => {
+  //     setNumberOfLikes(result);
+  //   });
+  // }, [eventId]);
 
   const eventAdd = (eventData) => {
     setEvents((state) => [...state, eventData]);
@@ -25,17 +33,25 @@ export const EventProvider = ({ children }) => {
   };
 
   const eventRemove = (eventId) => {
-    setEvents((state) => state.filter(x => x._id !== eventId));
-}
+    setEvents((state) => state.filter((x) => x._id !== eventId));
+  };
+
   return (
-    <eventContext.Provider value={{ events, eventEdit, eventAdd, eventRemove }}>
+    <eventContext.Provider
+      value={{
+        events,
+        eventEdit,
+        eventAdd,
+        eventRemove,
+      }}
+    >
       {children}
     </eventContext.Provider>
   );
 };
 
 export const useEventContext = () => {
-    const context = useContext(eventContext);
+  const context = useContext(eventContext);
 
-    return context;
+  return context;
 };

@@ -34,12 +34,19 @@ const CreateEvent = () => {
             name="date"
             placeholder="Enter event date..."
           />
+           <label htmlFor="city">City:</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            placeholder="Enter event city..."
+          />
           <label htmlFor="tickets">Tickets:</label>
                 <input
                     type="number"
                     id="tickets"
                     name="tickets"
-                    min={1}
+                    min={0}
                     placeholder={1}
                 />
 

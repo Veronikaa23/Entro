@@ -47,7 +47,7 @@
     font-weight: 400;
 }
 
-.levels {
+/* .levels {
     display: inline-block;
     margin-top: 15px;
     color: #555;
@@ -55,7 +55,7 @@
     border-radius: 5px;
     background-color: #b4b6ee;
     border: 1px solid rgba(218, 181, 181, 0.829);
-}
+} */
 
 .type {
     display: inline-block;
@@ -108,11 +108,13 @@
     text-align: right;
     padding-right: 15px;
     padding-bottom: 40px;
+    
 }
 
 .button {
     height: 15%;
-    background-color: #54557b;
+    border-radius: 15px;
+    background-color: #547aa5;
     padding: 14px;
     margin-top: auto;
     font-size: 21px;
@@ -120,7 +122,7 @@
 }
 
 .button:hover {
-    background-color: #6f5d9c;
+    background-color: #8fa9b9;
     color: white;
 }
 

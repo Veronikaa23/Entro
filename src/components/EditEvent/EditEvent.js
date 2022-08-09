@@ -39,14 +39,16 @@ const EditEvent = () => {
                     <input type="text" id="title" name="title" defaultValue={currentEvent.title} />
                     <label htmlFor="date">Date:</label>
           <input type="date" id="date" name="date" defaultValue={currentEvent.date} />
-                    <label htmlFor="seats">Number of seats:</label>
+                    <label htmlFor="tickets">Available tickets:</label>
                     <input
                         type="number"
-                        id="seats"
-                        name="seats"
-                        min={1}
-                        defaultValue={currentEvent.seats}
+                        id="tickets"
+                        name="tickets"
+                        min={0}
+                        defaultValue={currentEvent.tickets}
                     />
+                    <label htmlFor="city">City:</label>
+                    <input type="text" id="city" name="city" defaultValue={currentEvent.city} />
                     <label htmlFor="event-img">Image:</label>
                     <input type="text" id="imageUrl" name="imageUrl" defaultValue={currentEvent.imageUrl} />
                     <label htmlFor="description">Description:</label>

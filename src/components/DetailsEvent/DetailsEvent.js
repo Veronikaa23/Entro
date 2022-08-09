@@ -1,3 +1,5 @@
+import "./DetailsEvent.css"
+
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
@@ -55,14 +57,14 @@ const DetailsEvent = () => {
         <div className="event-header">
           <img className="event-img" src={currentEvent.imageUrl} alt="poster" />
           <h1>{currentEvent.title}</h1>
-          <span className="date">Date: {currentEvent.date}</span>
         </div>
-        <span className="tickets">
+        <p className="date">Date: {currentEvent.date}</p>
+        <p className="tickets">
           Available tickets: {currentEvent.tickets}
-        </span>
+        </p>
         <p className="city">City: {currentEvent.city}</p>
-        <div className="likes">Total likes: {numberOfLikes} </div>
         <p className="text">{currentEvent.description}</p>
+        <div className="likes">Total likes: {numberOfLikes} </div>
 
         {!isEmpty && (
           <div className="buttons">
@@ -70,17 +72,17 @@ const DetailsEvent = () => {
               <div>
                 <Link
                   to={`/events/${currentEvent._id}/edit`}
-                  className="button"
+                  className="btn-edit"
                 >
                   Edit
                 </Link>
-                <button onClick={eventDeleteHandler} className="button">
+                <button onClick={eventDeleteHandler} className="btn-delete">
                   Delete
                 </button>
               </div>
             )}
             {!isOwner && (
-              <button onClick={(e) => onLike(e)} className="button">
+              <button onClick={(e) => onLike(e)} className="btn-like">
                 Like
               </button>
             )}

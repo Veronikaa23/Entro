@@ -1,4 +1,4 @@
-
+import "./EditEvent.css"
 import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from 'react-router-dom';
 

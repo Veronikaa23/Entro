@@ -1,3 +1,4 @@
+import "./Catalog.css";
 import { useContext, useRef, useState, useEffect } from "react";
 import { eventContext } from "../../context/eventContext";
 import CatalogEvent from "./Event/CatalogEvent";
@@ -28,10 +29,10 @@ const Catalog = () => {
           ref={inputRef}
           type="search"
           name=""
-          placeholder="Search here..."
+          placeholder="Search for events in your city here..."
         />
-        <button type="submit" onClick={searchHandler}>
-          Search
+        <button type="submit" onClick={searchHandler} className="btn-search">
+        Search 
         </button>
       </form>
 
@@ -49,7 +50,8 @@ const Catalog = () => {
         </section>
       ) : (
         <section id="catalog-page">
-          <h1>All Events</h1>
+          <h1 >All Events</h1>
+  
           {events.length > 0 ? (
             events.map((x) => <CatalogEvent key={x._id} event={x} />)
           ) : (

@@ -4,6 +4,8 @@ const baseUrl = "http://localhost:3030/data/events";
 
 export const getAll = () => request.get(baseUrl);
 
+export const getAllPagination = (offset, pageSize) => request.get(`${baseUrl}?&offset=${offset}&pageSize=${pageSize}`);
+
 export const getOne = (eventId) => request.get(`${baseUrl}/${eventId}`);
 
 export const create = (eventData) => request.post(baseUrl, eventData);
@@ -24,9 +26,14 @@ export const getLikes = (eventId) =>
     `http://localhost:3030/data/likes?where=eventId%3D%22${eventId}%22&count`
   );
 
-export const search = (searchText) => {
-    const query = encodeURIComponent(`city LIKE "${searchText}"`)
-    // console.log(query,"query");
-    return request.get(`${baseUrl}?where=${query}`)
-}
+export const search = (searchText,offset,pageSize) => {
+  const query = encodeURIComponent(`city LIKE "${searchText}"`);
+  // console.log(query,"query");
+  return request.get(`${baseUrl}?where=${query}&offset=${offset}&pageSize=${pageSize}`);
+};
 
+// export const getPage = (offset, pageSize) => {
+//   request.get(
+//     `http://localhost:3030/data/events?offset=${offset}&pageSize=${pageSize}`
+//   );
+// };

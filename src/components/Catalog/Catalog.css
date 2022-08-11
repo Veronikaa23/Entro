@@ -151,3 +151,34 @@ button:active {
     padding: 5px;
     width: 140px;
 }
+#paginate{
+   display: flex;
+   align-items:center;
+   justify-content: center;
+}
+
+#paginate>button {
+    margin-left: 100px;
+    margin-top: 100px;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    height: 60px;
+    width: 150px;
+    font-size: 25px;
+    color: rgb(53, 49, 49);
+    background: #8fa9b9;
+    border-radius: 15px;
+}
+
+#paginate>button:hover{
+    cursor: pointer;
+    color: white;
+    background-color: #547aa5;
+}
+
+#paginate>button:disabled{
+    cursor: pointer;
+    color: white;
+    background-color: #547aa5;
+}

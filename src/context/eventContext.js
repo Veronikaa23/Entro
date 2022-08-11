@@ -10,6 +10,7 @@ export const EventProvider = ({ children }) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  // const [page, setPage] = useState(0);
 
   const navigate = useNavigate();
 

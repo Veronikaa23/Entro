@@ -1,12 +1,12 @@
 import "./Catalog.css";
 import Spinner from "../Spinner/Spinner";
-import { useContext, useRef, useState, useEffect } from "react";
-import { eventContext } from "../../context/eventContext";
+import { useRef, useState, useEffect } from "react";
+// import { useEventContext } from "../../context/eventContext";
 import CatalogEvent from "./Event/CatalogEvent";
 import * as eventService from "../../services/eventService";
 
 const Catalog = () => {
-  const { events } = useContext(eventContext);
+  // const { events } = useEventContext();
 
   const inputRef = useRef();
   const [searchText, setSearchText] = useState("");
@@ -14,17 +14,32 @@ const Catalog = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(0);
+  // const [eventPaginate, setEventPaginate] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
     eventService
-      .search(searchText)
+      .search(searchText, page, 4)
       .then((res) => {
         setSearchData(res);
       })
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
-  }, [searchText]);
+  }, [searchText, page]);
+
+  // console.log(searchData);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   eventService
+  //   .getAllPagination(page, 4)
+  //   .then((res) => {
+  //     setEventPaginate(res);
+  //   })
+  //   .catch((err) => setError(err))
+  //   .finally(() => setIsLoading(false));
+
+  // },[page]);
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -52,9 +67,9 @@ const Catalog = () => {
         </button>
       </form>
 
-      {searchText.length > 0 ? (
+      {
         <section id="find-section">
-          {searchData.length > 0 ? (
+          {searchData.length ? (
             searchData.map((x) => <CatalogEvent key={x._id} event={x} />)
           ) : (
             <div className="no-data-listing">
@@ -64,17 +79,21 @@ const Catalog = () => {
             </div>
           )}
         </section>
-      ) : (
-        <section id="catalog-page">
-          <h1>All Events</h1>
-
-          {events.length > 0 ? (
-            events.map((x) => <CatalogEvent key={x._id} event={x} />)
-          ) : (
-            <h3 className="no-articles">No events yet</h3>
-          )}
-        </section>
-      )}
+      }
+      <div id="paginate">
+        <button
+          disabled={page === 0}
+          onClick={() => setPage((prevPage) => prevPage - 4)}
+        >
+          Prev
+        </button>
+        <button
+          disabled={searchData.length < 4}
+          onClick={() => setPage((prevPage) => prevPage + 4)}
+        >
+          Next
+        </button>
+      </div>
     </main>
   );
 };

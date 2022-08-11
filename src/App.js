@@ -34,7 +34,7 @@ function App() {
               <Route path="/events/:eventId/edit" element={<EditEvent />} />
               <Route path="/catalog" element={<Catalog />} />
               <Route path="/catalog/:eventId" element={<DetailsEvent />} />
-              <Route path="/404" element={<Page404 />} />
+              <Route path="/*" element={<Page404 />} />
             </Routes>
           </main>
         </EventProvider>

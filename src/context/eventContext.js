@@ -1,3 +1,4 @@
+import Spinner from "../components/Spinner/Spinner";
 import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as eventService from "../services/eventService";
@@ -5,17 +6,40 @@ import * as eventService from "../services/eventService";
 export const eventContext = createContext();
 
 export const EventProvider = ({ children }) => {
-
   const [events, setEvents] = useState([]);
-  // const [likes, setLikes] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    eventService.getAll().then((result) => {
-      setEvents(result);
-    });
+    eventService
+      .getAll()
+      .then((result) => {
+        setEvents(result);
+      })
+      .catch((err) => setError(err))
+      .finally(() => setIsLoading(false));
   }, []);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (error) {
+    return <p> Error: {error} </p>;
+  }
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   eventService
+  //     .search(searchText)
+  //     .then((res) => {
+  //       setSearchData(res);
+  //     })
+  //     .catch((err) => setError(err))
+  //     .finally(() => setIsLoading(false));
+  // }, [searchText]);
 
   // useEffect(() => {
   //   eventService.getLikes(eventId).then((result) => {

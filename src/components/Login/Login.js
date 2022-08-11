@@ -1,25 +1,23 @@
-import "./Login.css"
+import "./Login.css";
 
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import * as authService from "../../services/authService"
+import * as authService from "../../services/authService";
 
 const Login = () => {
-
-  const  {userLogin}  = useContext(AuthContext);
+  const { userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const onSubmit = (e) => {
     e.preventDefault();
 
     const { email, password } = Object.fromEntries(new FormData(e.target));
-    console.log(email,password);
 
-   authService.login(email, password)
-      .then(authData => {
+    authService
+      .login(email, password)
+      .then((authData) => {
         userLogin(authData);
-        console.log(authData);
         navigate("/");
       })
       .catch(() => {
@@ -32,8 +30,7 @@ const Login = () => {
       <section id="login-page" className="auth">
         <form id="login" onSubmit={onSubmit}>
           <div className="container">
-            <div className="user-logo">
-            </div>
+            <div className="user-logo"></div>
             <h1>Login</h1>
             <label htmlFor="email">Email:</label>
             <input

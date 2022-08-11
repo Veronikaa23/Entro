@@ -14,14 +14,11 @@ const Register = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-   
-    // const username = formData.get("username");
-    // const address = formData.get("address");
+
     const email = formData.get("email");
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
-    // const gender = formData.get("gender");
-
+  
     if (password !== confirmPassword) {
       return;
     }

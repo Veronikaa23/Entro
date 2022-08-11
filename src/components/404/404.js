@@ -1,3 +1,5 @@
+import "./404.css";
+
 const Page404 = () => {
   return (
     <main>

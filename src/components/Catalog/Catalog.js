@@ -1,4 +1,5 @@
 import "./Catalog.css";
+import Spinner from "../Spinner/Spinner";
 import { useContext, useRef, useState, useEffect } from "react";
 import { eventContext } from "../../context/eventContext";
 import CatalogEvent from "./Event/CatalogEvent";
@@ -11,16 +12,31 @@ const Catalog = () => {
   const [searchText, setSearchText] = useState("");
   const [searchData, setSearchData] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
-    eventService.search(searchText).then((res) => {
-      setSearchData(res);
-    });
+    setIsLoading(true);
+    eventService
+      .search(searchText)
+      .then((res) => {
+        setSearchData(res);
+      })
+      .catch((err) => setError(err))
+      .finally(() => setIsLoading(false));
   }, [searchText]);
 
   const searchHandler = (e) => {
     e.preventDefault();
     setSearchText(inputRef.current.value);
   };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+  if (error) {
+    return <p> Error: {error} </p>;
+  }
 
   return (
     <main>
@@ -32,7 +48,7 @@ const Catalog = () => {
           placeholder="Search for events in your city here..."
         />
         <button type="submit" onClick={searchHandler} className="btn-search">
-        Search 
+          Search
         </button>
       </form>
 
@@ -50,8 +66,8 @@ const Catalog = () => {
         </section>
       ) : (
         <section id="catalog-page">
-          <h1 >All Events</h1>
-  
+          <h1>All Events</h1>
+
           {events.length > 0 ? (
             events.map((x) => <CatalogEvent key={x._id} event={x} />)
           ) : (

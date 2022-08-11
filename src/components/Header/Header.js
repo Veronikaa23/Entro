@@ -17,7 +17,6 @@ const Header = () => {
 
         {user.email ? (
           <div id="user">
-            {/* <Link to="/search">Search</Link> */}
             <Link to="/create">Create Event</Link>
             <Link to="/logout">Logout</Link>
           </div>

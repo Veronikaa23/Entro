@@ -1,5 +1,4 @@
 body {
-    /* background-image: url('../images/bg-fixed-3.jpg'); */
     background-attachment: fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -69,7 +68,6 @@ footer {
     left: 0;
     bottom: 0;
     display: block;
-    /* position: fixed; */
 }
 
 nav a {
@@ -99,10 +97,3 @@ nav a:hover {
     padding: 0;
     
 }
-
-/* a {
-    margin: 0.2em;
-    text-decoration: none;
-    font-weight: bold;
-    color: inherit;
-} */

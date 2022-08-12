@@ -19,10 +19,9 @@ export const getSortedEvents = () =>
   request.get(`${baseUrl}?sortBy=_createdOn%20desc`);
 
 
-
 export const search = (searchText,offset,pageSize) => {
   const query = encodeURIComponent(`city LIKE "${searchText}"`);
-  // console.log(query,"query");
+
   return request.get(`${baseUrl}?where=${query}&offset=${offset}&pageSize=${pageSize}`);
 };
 
@@ -35,9 +34,6 @@ export const getLikes = (eventId) =>
   request.get(
     `http://localhost:3030/data/likes?where=eventId%3D%22${eventId}%22&count`
   );
-
-// export const create = (gameId, comment) =>
-//     request.post(baseUrl, { gameId, text: comment });
 
 export const getByEventId = (eventId) => {
     const relations = encodeURIComponent(`user=_ownerId:users`);

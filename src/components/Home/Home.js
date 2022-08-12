@@ -1,5 +1,6 @@
 import "./Home.css";
 import Spinner from "../Spinner/Spinner";
+
 import { useState, useEffect } from "react";
 import LatestEvents from "./LatestEvents/LatestEvents.js";
 import * as eventService from "../../services/eventService";

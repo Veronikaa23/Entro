@@ -1,13 +1,11 @@
 import "./Catalog.css";
+
 import Spinner from "../Spinner/Spinner";
 import { useRef, useState, useEffect } from "react";
-// import { useEventContext } from "../../context/eventContext";
 import CatalogEvent from "./Event/CatalogEvent";
 import * as eventService from "../../services/eventService";
 
 const Catalog = () => {
-  // const { events } = useEventContext();
-
   const inputRef = useRef();
   const [searchText, setSearchText] = useState("");
   const [searchData, setSearchData] = useState([]);
@@ -15,7 +13,6 @@ const Catalog = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(0);
-  // const [eventPaginate, setEventPaginate] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -27,19 +24,6 @@ const Catalog = () => {
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
   }, [searchText, page]);
-
-  // console.log(searchData);
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   eventService
-  //   .getAllPagination(page, 4)
-  //   .then((res) => {
-  //     setEventPaginate(res);
-  //   })
-  //   .catch((err) => setError(err))
-  //   .finally(() => setIsLoading(false));
-
-  // },[page]);
 
   const searchHandler = (e) => {
     e.preventDefault();

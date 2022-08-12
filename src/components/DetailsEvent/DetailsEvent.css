@@ -53,14 +53,16 @@
     float: left;
     margin-left: 50px;
     margin-right: 50px;
+    margin-top: 50px;
     height: 300px;
+    width: 300px;
     border-radius: 50%;
     box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.5);
 }
 
 .info-section>.text {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 100px;
     padding: 60px;
     height: 20%;
 }
@@ -96,8 +98,7 @@
     color: rgb(255, 255, 255);
 }
 
-.btn-delete,
-.btn-like {
+.btn-delete{
     height: 15%;
     background-color: #547aa5;
     border-radius: 15px;
@@ -119,7 +120,65 @@
 
 .date,
 .city,
-.likes,
 .tickets {
     margin-left: 350px;
+}
+
+.details-comments>h2 {
+  height: 30px;
+}
+
+.details-comments ul {
+    text-align: center;
+    width: 100%;
+    margin-top: 50px;
+   margin-inline-start: auto;
+   padding: 0;
+}
+
+.no-comment {
+    text-align: center;
+    font-size: 28px;
+    background-color: #29303c;
+    color:whitesmoke;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.create-comment {
+    margin-top: 60px;
+    position: relative;
+    text-align: center;
+    width: auto;
+    height: auto;
+    border-radius: 15px;
+    padding: 40px;
+    box-sizing: border-box;
+    background:  #29303c;
+}
+
+.create-comment>label {
+    color: white;
+    font-size: 28px;
+    text-align: center;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.info-section>.details-comments li {
+    width: 400px;
+    display: inline-block;
+    position: static;
+    margin: 20px 30px 25px auto;
+    box-shadow: 8px 8px 8px 0 rgba(0, 0, 0, 0.2), 12px 12px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 16px;
+    margin-left: 60px;
+    background:  #29303c;
+    color: white;
+}
+
+.create-comment>.button:hover {
+    background-color: #41425c;
+    color: white;
+    cursor: pointer;
 }

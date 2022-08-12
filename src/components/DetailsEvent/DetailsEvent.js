@@ -4,7 +4,6 @@ import Spinner from "../Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
-// import { eventContext } from '../../context/eventContext';
 import { useEventContext } from "../../context/eventContext";
 
 import * as eventService from "../../services/eventService";
@@ -15,7 +14,10 @@ const DetailsEvent = () => {
   const { eventId } = useParams();
   const { addComment, eventRemove } = useEventContext();
   const [currentEvent, setCurrentEvent] = useState({});
-  // const [numberOfLikes, setNumberOfLikes] = useState();
+  const [eventComments, setEventComments] = useState([]);
+  const [comment, setComment] = useState("");
+
+  console.log(user);
 
   const navigate = useNavigate();
 
@@ -29,21 +31,28 @@ const DetailsEvent = () => {
     eventService
       .getOne(eventId)
       .then((result) => {
-        setCurrentEvent(result)
+        setCurrentEvent(result);
       })
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
   }, [eventId]);
 
-//   useEffect(() => {
-//     (async () => {
-//         const eventDetails = await eventService.getOne(eventId);
-//         console.log(eventDetails);
-//         const eventComment = await commentService.getByEventId(eventId);
+  useEffect(() => {
+    commentService
+      .getByEventId(eventId)
+      .then((result) => {
+        setEventComments(result);
+      })
+      .catch((err) => setError(err))
+      .finally(() => setIsLoading(false));
+  }, [eventId, comment]);
 
-//         fetchEventDetails(eventId, { ...eventDetails, comments: eventComment.map(x => `${x.user.email}: ${x.text}`) });
-//     })();
-// }, [])
+  useEffect(() => {
+    if(comment){
+      commentService.create(eventId, comment)
+    }
+  
+  }, [eventId, comment]);
 
   const eventDeleteHandler = () => {
     const confirmation = window.confirm(
@@ -60,13 +69,10 @@ const DetailsEvent = () => {
   const addCommentHandler = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-
     const comment = formData.get("comment");
-    console.log(comment);
 
-    commentService.create(eventId, comment).then((result) => {
-      addComment(eventId, comment);
-    });
+    setComment(comment);
+    e.target.reset();
   };
 
   if (isLoading) {
@@ -87,21 +93,7 @@ const DetailsEvent = () => {
         <p className="date">Date: {currentEvent.date}</p>
         <p className="tickets">Available tickets: {currentEvent.tickets}</p>
         <p className="city">City: {currentEvent.city}</p>
-        {/* <p className="likes">People who are interested of: {numberOfLikes} </p> */}
         <p className="text">{currentEvent.description}</p>
-
-        <div className="details-comments">
-          <h2>Comments:</h2>
-          <ul>
-            {currentEvent.comments?.map((x) => (
-              <li key={x} className="comment">
-                <p>{x}</p>
-              </li>
-            ))}
-          </ul>
-
-          {!currentEvent.comments && <p className="no-comment">No comments.</p>}
-        </div>
 
         {!isEmpty && (
           <div className="buttons">
@@ -118,20 +110,27 @@ const DetailsEvent = () => {
                 </button>
               </div>
             )}
-            {/* {!isOwner && (
-              <button onClick={addCommentHandler} className="btn-like">
-                Interested
-              </button>
-            )} */}
           </div>
         )}
+
+        <div className="details-comments">
+          <h2>Comments:</h2>
+          <ul>
+            {eventComments?.map((x) => (
+              <li key={x._id} className="comment">
+                <p>{x.text}</p>
+              </li>
+            ))}
+          </ul>
+
+          {!eventComments.length && <p className="no-comment">No comments yet.</p>}
+        </div>
       </div>
       {!isEmpty && (
         <article className="create-comment">
           <label>Add new comment:</label>
-          <form className="form" onSubmit={addCommentHandler}>
+          <form className="form-comment" onSubmit={addCommentHandler}>
             <textarea name="comment" placeholder="Comment......" />
-
             <input className="btn submit" type="submit" value="Add Comment" />
           </form>
         </article>

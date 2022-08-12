@@ -71,10 +71,7 @@ const Login = () => {
               id="login-password"
               placeholder="*******"
               name="password"
-              // onChange={handlePasswordChange}
-              // value={password}
             />
-            {/* {passwordError && <div className="error-msg">{passwordError}</div>} */}
 
             <input type="submit" className="btn submit" value="Login" />
             <p className="field">

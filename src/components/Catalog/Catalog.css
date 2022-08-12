@@ -182,3 +182,14 @@ button:active {
     color: white;
     background-color: #547aa5;
 }
+
+.no-data-listing {
+    background-color: #547aa5;
+    padding: 15px;
+    border-radius: 15px;
+    margin: auto;
+    color:white;
+    font-size: 35px;
+    text-align: center;
+
+}

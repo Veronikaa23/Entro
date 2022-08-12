@@ -11,7 +11,6 @@ export const EventProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import "./Login.css";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import * as authService from "../../services/authService";
@@ -9,10 +9,31 @@ const Login = () => {
   const { userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  const handleChange = (event) => {
+    if (!isValidEmail(event.target.value)) {
+      setError("Email is invalid");
+    } else {
+      setError(null);
+    }
+
+    setMessage(event.target.value);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     const { email, password } = Object.fromEntries(new FormData(e.target));
+
+    if (email === "" || password === "") {
+      return window.alert("All fields are required");
+    }
 
     authService
       .login(email, password)
@@ -20,9 +41,10 @@ const Login = () => {
         userLogin(authData);
         navigate("/");
       })
-      .catch(() => {
-        navigate("/");
-      });
+      .catch(
+        (err) => err
+        // navigate("/")
+      );
   };
 
   return (
@@ -38,14 +60,22 @@ const Login = () => {
               id="email"
               placeholder="pesho123@abv.bg"
               name="email"
+              value={message}
+              onChange={handleChange}
             />
+            {error && <h2 style={{ color: "red" }}>{error}</h2>}
+
             <label htmlFor="login-pass">Password:</label>
             <input
               type="password"
               id="login-password"
               placeholder="*******"
               name="password"
+              // onChange={handlePasswordChange}
+              // value={password}
             />
+            {/* {passwordError && <div className="error-msg">{passwordError}</div>} */}
+
             <input type="submit" className="btn submit" value="Login" />
             <p className="field">
               <span>

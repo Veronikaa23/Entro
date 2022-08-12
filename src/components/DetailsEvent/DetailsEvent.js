@@ -4,15 +4,18 @@ import Spinner from "../Spinner/Spinner";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
+// import { eventContext } from '../../context/eventContext';
 import { useEventContext } from "../../context/eventContext";
+
 import * as eventService from "../../services/eventService";
+import * as commentService from "../../services/commentService";
 
 const DetailsEvent = () => {
   const { user } = useAuthContext();
   const { eventId } = useParams();
-  const { eventRemove } = useEventContext();
+  const { addComment, eventRemove } = useEventContext();
   const [currentEvent, setCurrentEvent] = useState({});
-  const [numberOfLikes, setNumberOfLikes] = useState();
+  // const [numberOfLikes, setNumberOfLikes] = useState();
 
   const navigate = useNavigate();
 
@@ -26,21 +29,21 @@ const DetailsEvent = () => {
     eventService
       .getOne(eventId)
       .then((result) => {
-        setCurrentEvent(result);
+        setCurrentEvent(result)
       })
       .catch((err) => setError(err))
       .finally(() => setIsLoading(false));
   }, [eventId]);
 
-  useEffect(() => {
-    eventService
-      .getLikes(eventId)
-      .then((result) => {
-        setNumberOfLikes(result);
-      })
-      .catch((err) => setError(err))
-      .finally(() => setIsLoading(false));
-  }, [eventId]);
+//   useEffect(() => {
+//     (async () => {
+//         const eventDetails = await eventService.getOne(eventId);
+//         console.log(eventDetails);
+//         const eventComment = await commentService.getByEventId(eventId);
+
+//         fetchEventDetails(eventId, { ...eventDetails, comments: eventComment.map(x => `${x.user.email}: ${x.text}`) });
+//     })();
+// }, [])
 
   const eventDeleteHandler = () => {
     const confirmation = window.confirm(
@@ -54,13 +57,16 @@ const DetailsEvent = () => {
       });
     }
   };
-  const onLike = (e) => {
+  const addCommentHandler = (e) => {
     e.preventDefault();
-    const isClicked = e.target;
-    if (isClicked) {
-      eventService.likes(eventId);
-      console.log("clicked");
-    }
+    const formData = new FormData(e.target);
+
+    const comment = formData.get("comment");
+    console.log(comment);
+
+    commentService.create(eventId, comment).then((result) => {
+      addComment(eventId, comment);
+    });
   };
 
   if (isLoading) {
@@ -81,8 +87,21 @@ const DetailsEvent = () => {
         <p className="date">Date: {currentEvent.date}</p>
         <p className="tickets">Available tickets: {currentEvent.tickets}</p>
         <p className="city">City: {currentEvent.city}</p>
-        <p className="likes">People who are interested of: {numberOfLikes} </p>
+        {/* <p className="likes">People who are interested of: {numberOfLikes} </p> */}
         <p className="text">{currentEvent.description}</p>
+
+        <div className="details-comments">
+          <h2>Comments:</h2>
+          <ul>
+            {currentEvent.comments?.map((x) => (
+              <li key={x} className="comment">
+                <p>{x}</p>
+              </li>
+            ))}
+          </ul>
+
+          {!currentEvent.comments && <p className="no-comment">No comments.</p>}
+        </div>
 
         {!isEmpty && (
           <div className="buttons">
@@ -99,14 +118,24 @@ const DetailsEvent = () => {
                 </button>
               </div>
             )}
-            {!isOwner && (
-              <button onClick={onLike} className="btn-like">
+            {/* {!isOwner && (
+              <button onClick={addCommentHandler} className="btn-like">
                 Interested
               </button>
-            )}
+            )} */}
           </div>
         )}
       </div>
+      {!isEmpty && (
+        <article className="create-comment">
+          <label>Add new comment:</label>
+          <form className="form" onSubmit={addCommentHandler}>
+            <textarea name="comment" placeholder="Comment......" />
+
+            <input className="btn submit" type="submit" value="Add Comment" />
+          </form>
+        </article>
+      )}
     </section>
   );
 };

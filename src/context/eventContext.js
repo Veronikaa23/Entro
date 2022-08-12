@@ -3,6 +3,21 @@ import { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import * as eventService from "../services/eventService";
 
+
+// const eventReducer = (state, action) => {
+//   switch (action.type) {
+//       case 'FETCH_GAME_DETAILS':
+  
+//   }
+// };
+// const fetchEventDetails = (gameId, gameDetails) => {
+//   dispatch({
+//       type: 'FETCH_GAME_DETAILS',
+//       payload: gameDetails,
+//       gameId,
+//   })
+// }
+
 export const eventContext = createContext();
 
 export const EventProvider = ({ children }) => {
@@ -61,6 +76,24 @@ export const EventProvider = ({ children }) => {
     setEvents((state) => state.filter((x) => x._id !== eventId));
   };
 
+//   const fetchEventDetails = (eventId, eventDetails) => {
+//    setEvents((state) => [...state,eventId,eventDetails])
+// };
+
+  const addComment = (eventId,comment) => {
+            setEvents(state => {
+            const event = state.find(x => x._id === eventId);
+
+            const comments = event.comments || [];
+            comments.push(comment)
+
+            return [
+                ...state.filter(x => x._id !== eventId),
+                { ...event, comments },
+            ];
+        });
+  }
+
   return (
     <eventContext.Provider
       value={{
@@ -68,6 +101,7 @@ export const EventProvider = ({ children }) => {
         eventEdit,
         eventAdd,
         eventRemove,
+        addComment,
       }}
     >
       {children}

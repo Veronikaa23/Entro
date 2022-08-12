@@ -1,6 +1,6 @@
 import "./Register.css"
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 import { useNavigate } from "react-router-dom";
@@ -10,17 +10,40 @@ const Register = () => {
   const { userLogin } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState(null);
+
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  const handleChange = event => {
+    if (!isValidEmail(event.target.value)) {
+      setError('Email is invalid');
+    } else {
+      setError(null);
+    }
+
+    setMessage(event.target.value);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
 
     const email = formData.get("email");
+    const username = formData.get('username');
+    const city = formData.get('city');
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
-  
+
+    if(email==="" || username==="" || city==="" || password===""|| confirmPassword===""){
+      return window.alert('All fields are required!')
+    }
+    
     if (password !== confirmPassword) {
-      return;
+      return window.alert('Password mismatch!');
     }
 
     authService.register(email, password).then((authData) => {
@@ -41,7 +64,11 @@ const Register = () => {
             id="email"
             name="email"
             placeholder="maria@email.com"
+            value={message}
+            onChange={handleChange}
           />
+          {error && <h2 style={{color: 'red'}}>{error}</h2>}
+
           <label htmlFor="username">Username:</label>
           <input
             type="text"
